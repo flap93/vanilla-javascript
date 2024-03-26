@@ -7,7 +7,19 @@
   <title>Book List</title>
 
 
+  <style>
+    * {
 
+
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #DDD0C8;
+    }
+  </style>
 
   <script>
     function calls() {
@@ -17,19 +29,183 @@
     }
 
     function styles() {
+      createBoxStylesParent(["container"], {
+        display: "flex",
+        width: "calc(100% - 150px)",
+        flexDirection: "column",
+        height: "700px",
+        //       arriba , derecha , abajo , izquierda
+        padding: "20px   50px  20px 50px",
+        margin: " 30px 100px 50px  50px",
+      })
 
+      createBoxStylesParent(["mainTitle"], {
+        display: "flex",
+        justifyContent: "center",
+
+      })
+
+      createBoxStylesParent(["book-form", "tablaLibros"], {
+        display: "flex",
+        flexDirection: "column",
+        alignSelf: "center",
+        position: "relative",
+        right: "50px"
+
+      })
+
+      createBoxStylesParent(["form-group1", "form-group2", "form-group3", "tabla"], {
+        marginTop: "10px",
+      })
+
+      createBoxStylesParent(["labe1", "label2", "label3"], {
+        marginBottom: "10px",
+
+      })
+      createBoxStylesParent(["title", "author", "isbn"], {
+        display: "block",
+        width: "160%",
+        marginTop: "5px",
+      })
+      createBoxStylesParent(["enviar"], {
+        marginTop: "10px",
+        width: "160%",
+        backgroundColor: "#0280B2",
+        innerHTML: "Add Book",
+        cursor: "pointer",
+        color: "white"
+      })
+
+      stylesForTable(["th"], {
+        border: "1px solid black",
+      })
 
     }
 
     function iniciar() {
+      createContainers("div", "container");
+      createNodeTag("h1", "mainTitle", "MyBookList");
+      addToParent("mainTitle", "container");
+      createContainers("form", "book-form");
+      //--------------------------------- titulo del libro
+      createContainers("div", "form-group1");
+      createLabel("label", "title", "label1", "Title");
+      createInput("input", "title", "text");
+      //--------------------------------- Autor  del Libro
+      createContainers("div", "form-group2");
+      createLabel("label", "author", "label2", "Author");
+      createInput("input", "author", "text");
+      //--------------------------------- isbn del libro
+      createContainers("div", "form-group3");
+      createLabel("label", "isbn", "label3", "ISBN");
+      createInput("input", "isbn", "text");
+      //--------------------------------- boton de submit
+      createInputBoton("input", "enviar", "submit", "Add Book");
+      // tabla
 
+      createTable();
+      addSevToParent(["title", "book-form", "tabla"], "container");
+
+      addSevToParent(["form-group1", "form-group2", "form-group3", "enviar"], "book-form");
+      addSevToParent(["label1", "title"], "form-group1");
+      addSevToParent(["label2", "author"], "form-group2");
+      addSevToParent(["label3", "isbn"], "form-group3");
+    }
+
+    function createBoxStylesParent(ids, styles) {
+      ids.forEach(id => {
+        let element = document.getElementById(id);
+        if (element) {
+          for (let prop in styles) {
+            element.style[prop] = styles[prop];
+          }
+        }
+      });
+    }
+
+
+    function createLabel(tipo, forId, ID, txt) {
+      let ele = document.createElement(tipo);
+      ele.setAttribute("for", forId);
+      ele.innerHTML = txt;
+      ele.id = ID;
+      document.body.appendChild(ele);
+    }
+
+    function createInput(tipo, id, tipoInput) {
+      let ele = document.createElement(tipo);
+      ele.id = id;
+      ele.type = tipoInput;
+      //ele.placeholder = "dd/mm/aaaa";
+      ele.style.border = "1px solid black";
+      document.body.appendChild(ele);
+    }
+    function createInputBoton(tipo, id, tipoInput, value) {
+      let ele = document.createElement(tipo);
+      ele.id = id;
+      ele.type = tipoInput;
+      ele.value = value;
+      ele.style.border = "1px solid black";
+      document.body.appendChild(ele);
+    }
+    function createContainers(tipo, id) {
+      let ele = document.createElement(tipo);
+      ele.id = id;
+      document.body.appendChild(ele);
+      return ele;
+    }
+    // function to add one element to a parent container
+    function addToParent(nodoCreated, parentID) {
+      let ele = document.getElementById(nodoCreated);
+      let padre = document.getElementById(parentID);
+      padre.appendChild(ele);
+    }
+
+    // function to add several  elements to a parent container
+    function addSevToParent(nodoIdCreated, parentId) {
+      let idsToParent = document.getElementById(parentId);
+      nodoIdCreated.forEach(nodeID => {
+        let nodes = document.getElementById(nodeID);
+        idsToParent.appendChild(nodes);
+      })
     }
 
 
 
+    function createNodeTag(tipo, id, txt) {
+      let ele = document.createElement(tipo);
+      ele.id = id;
+      ele.innerHTML = txt;
+      document.body.appendChild(ele);
+      return ele;
+    }
 
 
+    function createTable() {
+      var res = " ";
+      res += "<tr>";
+      res += "<th>" + "Title " + "</th>";
+      res += "<th>" + "Author " + "</th>";
+      res += "<th>" + "ISBN# " + "</th>";
+      res += "</tr>";
+      let ele = document.createElement("table");
+      ele.id = "tabla";
+      document.body.appendChild(ele)
+      ele.innerHTML = res;
 
+      return res;
+    }
+
+    function stylesForTable(tags, styles) {
+      tags.forEach(tag => {
+        let elements = document.getElementsByTagName(tag);
+        for (let i = 0; i < elements.length; i++) {
+          for (let prop in styles) {
+            elements[i].style[prop] = styles[prop];
+          }
+        }
+      });
+    }
     window.onload = calls;
   </script>
 </head>

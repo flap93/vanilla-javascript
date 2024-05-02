@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- code idea from this you tube video :
+https://www.youtube.com/watch?v=JaMCxVWtW58&list=PLillGF-RfqbbnEGy3ROiLWk7JMCuSyQtX&index=7 -->
 
 <head>
   <meta charset="UTF-8">
@@ -80,6 +82,7 @@
         border: "1px solid black",
       })
 
+
     }
 
     function iniciar() {
@@ -110,7 +113,32 @@
       addSevToParent(["label1", "title"], "form-group1");
       addSevToParent(["label2", "author"], "form-group2");
       addSevToParent(["label3", "isbn"], "form-group3");
+
+      addStyleChild('tbody', 'tablaResultados');
+      // get the id form , adds and event when addming a book , use the call back load text to display the book in the table
+      document.getElementById("book-form").addEventListener('submit', loadText);
     }
+
+    // get the value of the inputs and display it in the table 
+    function loadText(event) {
+      event.preventDefault(); // Previene el comportamiento por defecto de recargar la página
+      let title = document.getElementById('title').value;
+      let author = document.getElementById('author').value;
+      let isbn = document.getElementById('isbn').value;
+
+
+      let datos = '';
+
+
+      datos += '<tr><td>' + title + '</td><td>' + author + '</td><td>' + isbn + '</td></tr>';
+      document.getElementById('tablaResultados').innerHTML += datos;
+
+      // vacia los inputs
+      document.getElementById('title').value = '';
+      document.getElementById('author').value = '';
+      document.getElementById('isbn').value = '';
+    }
+
 
     function createBoxStylesParent(ids, styles) {
       ids.forEach(id => {
@@ -180,6 +208,18 @@
       return ele;
     }
 
+    const bookList = [
+      {
+        title: 'El Código de la Responsabilidad',
+        author: 'Mark Twighten',
+        isbn: '#15247'
+      },
+      {
+        title: '  La Caída del Imperio Romano',
+        author: 'Edward Gibbon',
+        isbn: '#03856'
+      }
+    ]
 
     function createTable() {
       var res = " ";
@@ -188,6 +228,9 @@
       res += "<th>" + "Author " + "</th>";
       res += "<th>" + "ISBN# " + "</th>";
       res += "</tr>";
+      bookList.forEach((books) => {
+        const list = document.getElementById("tabla")
+      })
       let ele = document.createElement("table");
       ele.id = "tabla";
       document.body.appendChild(ele)
@@ -195,6 +238,8 @@
 
       return res;
     }
+
+
 
     function stylesForTable(tags, styles) {
       tags.forEach(tag => {
@@ -205,6 +250,15 @@
           }
         }
       });
+    }
+
+    function addStyleChild(tag, id) {
+      let ele = document.querySelectorAll(tag);
+      ele.forEach((td, index) => {
+
+        td.id = id;
+      })
+
     }
     window.onload = calls;
   </script>
